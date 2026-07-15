@@ -42,5 +42,25 @@ public class ProductsApiTest extends ApiBaseTest{
         soft.assertThat(response.jsonPath().getString("products[0].category.category")).isEqualTo("Tops");
         soft.assertAll();
     }
+    @Test
+    @Story("Products API")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("API 2: POST to all products list — method not supported")
+    public void postToAllProductsList() {
+        Response response = given()
+                .spec(requestSpec)
+                .accept(ContentType.JSON)
+                .when().post("/productsList")
+                .then()
+                .log().all()
+                .extract().response();
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
+        soft.assertThat(response.jsonPath().getString("message"))
+                .isEqualTo("This request method is not supported.");
+        soft.assertAll();
     }
+
+    }
+
 
