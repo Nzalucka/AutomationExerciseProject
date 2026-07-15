@@ -9,6 +9,8 @@ import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -100,6 +102,31 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("This request method is not supported.");
         soft.assertAll();
+    }
+
+    @Test
+    @Story("Products API")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("API 5: POST search product — formParam")
+    public void searchProductFormParam() {
+        Response response = given()
+                .baseUri("https://automationexercise.com/api")
+                .formParam("search_product", "top")
+                .when().post("/searchProduct")
+                .then()
+                .log().all()
+                .extract().response();
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.statusCode()).isEqualTo(200);
+        soft.assertThat(response.jsonPath().getString("responseCode")).isEqualTo("200");
+        soft.assertThat(response.jsonPath().getList("products")).isNotEmpty();
+
+        List<String> names = response.jsonPath().getList("products.name");
+        soft.assertThat(names).anyMatch(n -> n.toLowerCase().contains("top"));
+
+        soft.assertAll();
+
     }
 
 }
