@@ -13,25 +13,26 @@ import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class ProductsApiTest extends ApiBaseTest{
+public class ProductsApiTest extends ApiBaseTest {
     @Test
     @Story("Products API")
     @Severity(SeverityLevel.CRITICAL)
     @Description("API 1: Get all products list")
     public void getAllProductsList() {
-            Response response = given()
+        Response response = given()
                 .spec(requestSpec)
                 .accept(ContentType.JSON)
                 .when().get("/productsList")
-                    .then()
-                    .log().all()
-                    .extract().response();
+                .then()
+                .log().all()
+                .extract().response();
 
-    validateProductsListResponse(response);
+        validateProductsListResponse(response);
 
     }
-    private void validateProductsListResponse(Response response){
-        SoftAssertions soft=new SoftAssertions();
+
+    private void validateProductsListResponse(Response response) {
+        SoftAssertions soft = new SoftAssertions();
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
         soft.assertThat(response.jsonPath().getList("products")).isNotEmpty();
@@ -42,6 +43,7 @@ public class ProductsApiTest extends ApiBaseTest{
         soft.assertThat(response.jsonPath().getString("products[0].category.category")).isEqualTo("Tops");
         soft.assertAll();
     }
+
     @Test
     @Story("Products API")
     @Severity(SeverityLevel.NORMAL)
@@ -61,6 +63,44 @@ public class ProductsApiTest extends ApiBaseTest{
         soft.assertAll();
     }
 
+    @Test
+    @Story("Brands API")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("API 3: Get all brands list")
+    public void getAllBrandsList() {
+        Response response = given()
+                .spec(requestSpec)
+                .accept(ContentType.JSON)
+                .when().get("/brandsList")
+                .then()
+                .log().all()
+                .extract().response();
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.statusCode()).isEqualTo(200);
+        soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
+        soft.assertThat(response.jsonPath().getList("brands")).isNotEmpty();
+        soft.assertThat(response.jsonPath().getString("brands[0].brand")).isEqualTo("Polo");
+        soft.assertAll();
+    }
+    @Test
+    @Story("Brands API")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("API 4: PUT to all brands list — method not supported")
+    public void putToAllBrandsList() {
+        Response response = given()
+                .spec(requestSpec)
+                .accept(ContentType.JSON)
+                .when().put("/brandsList")
+                .then()
+                .extract().response();
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
+        soft.assertThat(response.jsonPath().getString("message"))
+                .isEqualTo("This request method is not supported.");
+        soft.assertAll();
     }
 
+}
 
