@@ -78,6 +78,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .when().get("/brandsList")
                 .then()
                 .log().all()
+                .body(matchesJsonSchemaInClasspath("schemas/brands-schema.json"))
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
