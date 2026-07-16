@@ -37,6 +37,7 @@ public class ProductsApiTest extends ApiBaseTest {
 
     private void validateProductsListResponse(Response response) {
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
         soft.assertThat(response.jsonPath().getList("products")).isNotEmpty();
@@ -61,6 +62,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .log().all()
                 .extract().response();
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("This request method is not supported.");
@@ -82,6 +84,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(9000L);
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
         soft.assertThat(response.jsonPath().getList("brands")).isNotEmpty();
@@ -101,6 +104,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("This request method is not supported.");
@@ -121,6 +125,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getString("responseCode")).isEqualTo("200");
         soft.assertThat(response.jsonPath().getList("products")).isNotEmpty();
@@ -143,6 +148,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(400);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("Bad request, search_product parameter is missing in POST request.");

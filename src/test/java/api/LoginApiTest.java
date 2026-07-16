@@ -32,6 +32,7 @@ public class LoginApiTest extends ApiBaseTest{
                 .extract().response();
 
         SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.time()).isLessThan(3000L);
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
         soft.assertThat(response.jsonPath().getString("message")).isEqualTo("User exists!");

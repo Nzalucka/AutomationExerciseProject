@@ -9,6 +9,8 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeClass;
 
+import static org.hamcrest.Matchers.lessThan;
+
 public class ApiBaseTest {
     protected RequestSpecification requestSpec;
     protected ResponseSpecification responseSpec;
