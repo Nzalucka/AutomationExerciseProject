@@ -13,6 +13,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ProductsApiTest extends ApiBaseTest {
@@ -27,6 +28,7 @@ public class ProductsApiTest extends ApiBaseTest {
                 .when().get("/productsList")
                 .then()
                 .log().all()
+                .body(matchesJsonSchemaInClasspath("schemas/products-schema.json"))
                 .extract().response();
 
         validateProductsListResponse(response);
