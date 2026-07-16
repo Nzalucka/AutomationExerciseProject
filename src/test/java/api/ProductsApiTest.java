@@ -131,6 +131,22 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertAll();
 
     }
+    @Test
+    @Story("Products API")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("API 6: POST search product without parameter — 400")
+    public void searchProductWithoutParameter() {
+        Response response = given()
+                .baseUri("https://automationexercise.com/api")
+                .when().post("/searchProduct")
+                .then()
+                .extract().response();
 
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(400);
+        soft.assertThat(response.jsonPath().getString("message"))
+                .isEqualTo("Bad request, search_product parameter is missing in POST request.");
+        soft.assertAll();
+    }
 }
 
