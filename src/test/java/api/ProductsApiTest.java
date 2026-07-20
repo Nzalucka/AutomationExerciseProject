@@ -1,9 +1,6 @@
 package api;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
@@ -16,6 +13,9 @@ import static io.restassured.RestAssured.requestSpecification;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+
+@Epic("AutomationExercise API")
+@Feature("Products")
 public class ProductsApiTest extends ApiBaseTest {
     @Test
     @Story("Products API")

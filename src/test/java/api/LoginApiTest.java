@@ -1,15 +1,15 @@
 package api;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
-import io.qameta.allure.Story;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import org.assertj.core.api.SoftAssertions;
 import org.testng.annotations.Test;
 
 import static io.restassured.RestAssured.given;
 
+
+@Epic("AutomationExercise API")
+@Feature("Login")
 public class LoginApiTest extends ApiBaseTest{
     private static final String EMAIL = "testlogin123@test.com";
     private static final String PASSWORD = "test123";
