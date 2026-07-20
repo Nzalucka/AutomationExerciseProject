@@ -46,6 +46,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getInt("products[0].id")).isEqualTo(1);
         soft.assertThat(response.jsonPath().getString("products[0].brand")).isEqualTo("Polo");
         soft.assertThat(response.jsonPath().getString("products[0].category.category")).isEqualTo("Tops");
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
         soft.assertAll();
     }
 
@@ -66,6 +67,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("This request method is not supported.");
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
         soft.assertAll();
     }
 
@@ -89,6 +91,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(200);
         soft.assertThat(response.jsonPath().getList("brands")).isNotEmpty();
         soft.assertThat(response.jsonPath().getString("brands[0].brand")).isEqualTo("Polo");
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
         soft.assertAll();
     }
     @Test
@@ -108,6 +111,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(405);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("This request method is not supported.");
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
         soft.assertAll();
     }
 
@@ -129,6 +133,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.statusCode()).isEqualTo(200);
         soft.assertThat(response.jsonPath().getString("responseCode")).isEqualTo("200");
         soft.assertThat(response.jsonPath().getList("products")).isNotEmpty();
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
 
         List<String> names = response.jsonPath().getList("products.name");
         soft.assertThat(names).anyMatch(n -> n.toLowerCase().contains("top"));
@@ -152,6 +157,7 @@ public class ProductsApiTest extends ApiBaseTest {
         soft.assertThat(response.jsonPath().getInt("responseCode")).isEqualTo(400);
         soft.assertThat(response.jsonPath().getString("message"))
                 .isEqualTo("Bad request, search_product parameter is missing in POST request.");
+        soft.assertThat(response.header("Content-Type")).contains("text/html");
         soft.assertAll();
     }
 }
